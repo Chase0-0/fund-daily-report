@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基金投资日报 2026-04-29</title>
+    <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.0/dist/css/coreui.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@coreui/icons@3.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --cui-body-bg: #0d1117;
+            --cui-body-color: #c9d1d9;
+            --cui-dark: #0d1117;
+            --cui-sidebar-bg: #010409;
+            --cui-sidebar-border: #21262d;
+            --cui-card-bg: #161b22;
+            --cui-card-border: #30363d;
+            --cui-heading-color: #e6edf3;
+            --text-dim: #8b949e;
+            --accent: #58a6ff;
+            --risk: #f85149;
+            --safe: #3fb950;
+            --highlight: #d2a84e;
+        }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--cui-body-bg); color: var(--cui-body-color); }
+        .sidebar { background: var(--cui-sidebar-bg) !important; border-right: 1px solid var(--cui-sidebar-border) !important; }
+        .sidebar .nav-title { color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.75rem 1rem; }
+        .sidebar .nav-link { color: var(--text-dim); padding: 0.6rem 1rem; border-radius: 6px; margin: 2px 0.5rem; transition: all 0.15s ease; }
+        .sidebar .nav-link:hover { background: var(--cui-card-bg); color: #e6edf3; }
+        .sidebar .nav-link.active { background: rgba(88,166,255,0.12); color: var(--accent); font-weight: 500; }
+        .sidebar .nav-link .icon { margin-right: 0.75rem; font-size: 1.1rem; opacity: 0.8; }
+        .header { background: var(--cui-sidebar-bg) !important; border-bottom: 1px solid var(--cui-sidebar-border) !important; }
+        .card { background: var(--cui-card-bg); border: 1px solid var(--cui-card-border); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); margin-bottom: 1.5rem; }
+        .card-header { background: transparent; border-bottom: 1px solid var(--cui-card-border); color: var(--cui-heading-color); font-weight: 600; font-size: 1.1rem; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .card-header .icon { color: var(--accent); font-size: 1.2rem; }
+        .card-body { padding: 1.25rem; }
+        .highlight { color: var(--highlight); font-weight: 600; }
+        .risk { color: var(--risk); font-weight: 600; }
+        .safe { color: var(--safe); font-weight: 600; }
+        .note { background: rgba(88,166,255,0.06); border-left: 3px solid var(--accent); padding: 1rem 1.25rem; border-radius: 6px; margin: 1rem 0; }
+        .table { color: var(--cui-body-color); }
+        .table th, .table td { border-color: var(--cui-card-border); }
+        .table thead th { color: var(--text-dim); font-weight: 500; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+        hr { border-color: var(--cui-card-border); opacity: 0.5; }
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .wrapper { flex-direction: column; }
+            .body { margin-left: 0 !important; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header header-sticky mb-4">
+        <div class="container-fluid">
+            <button class="header-toggler px-md-0 me-md-3" type="button" data-coreui-toggle="sidebar">
+                <span class="header-toggler-icon"></span>
+            </button>
+            <a class="header-brand d-md-none" href="#"><span class="icon"><i class="cil-chart-line"></i></span> 基金日报</a>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb my-1">
+                    <li class="breadcrumb-item active" aria-current="page">📅 2026-04-29</li>
+                </ol>
+            </nav>
+        </div>
+    </header>
+
+    <div class="wrapper d-flex">
+        <!-- 左侧导航：默认折叠（只显示图标） -->
+        <aside class="sidebar sidebar-dark sidebar-fixed sidebar-narrow" id="sidebar">
+            <div class="sidebar-brand d-none d-md-flex justify-content-center py-3">
+                <span class="icon"><i class="cil-chart-line"></i></span>
+                <span class="sidebar-brand-full">基金日报</span>
+                <span class="sidebar-brand-narrow">📊</span>
+            </div>
+            <ul class="sidebar-nav" data-coreui="navigation" data-simplebar>
+                <li class="nav-title">日报板块</li>
+                <li class="nav-item"><a class="nav-link active" href="#dashboard"><span class="icon"><i class="cil-clipboard"></i></span> 纪律仪表盘</a></li>
+                <li class="nav-item"><a class="nav-link" href="#classroom"><span class="icon"><i class="cil-book"></i></span> 今日课堂</a></li>
+                <li class="nav-item"><a class="nav-link" href="#analysis"><span class="icon"><i class="cil-chart"></i></span> 行情解剖</a></li>
+                <li class="nav-item"><a class="nav-link" href="#strategy"><span class="icon"><i class="cil-settings"></i></span> 策略指挥所</a></li>
+                <li class="nav-item"><a class="nav-link" href="#market"><span class="icon"><i class="cil-newspaper"></i></span> 市场简报</a></li>
+                <li class="nav-item"><a class="nav-link" href="#qa"><span class="icon"><i class="cil-chat-bubble"></i></span> 你问我答</a></li>
+                <li class="nav-item"><a class="nav-link" href="#serial"><span class="icon"><i class="cil-library"></i></span> 连载专题</a></li>
+            </ul>
+            <div class="sidebar-footer d-none d-md-flex">
+                <div class="text-muted small px-3 py-2">专属投资私教 · 每日自动更新</div>
+            </div>
+        </aside>
+
+        <div class="body flex-grow-1 px-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12" id="dashboard">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-clipboard"></i></span>纪律仪表盘</div>
+        <div class="card-body">
+            <p>总收益率：<span class="highlight">+3.91%</span></p>
+            <p>总持仓数量：<span class="highlight">13只</span></p>
+            <p>正收益基金：<span class="safe">10只</span> | 负收益基金：<span class="risk">2只</span> | 零收益基金：1只</p>
+            <p>最高单只收益：<span class="highlight">+17.93%</span>（国泰中证全指通信设备ETF联接A）</p>
+            <p>最大单只亏损：<span class="risk">-3.03%</span>（华安黄金ETF联接A）</p>
+            <div class="note">今日所有基金当日收益为0，可能因非交易日或净值未更新。请关注市场动态。</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="classroom">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-book"></i></span>今日核心课堂</div>
+        <div class="card-body">
+            <p><strong>今日知识点：基金持仓中的“收益率”与“今日收益”区别</strong></p>
+            <p>持仓收益率（如+3.91%）反映自买入以来的累计表现；而今日收益（今日涨跌幅）仅计算单日波动。今日所有基金今日收益为0，可能因为：</p>
+            <ul>
+                <li>非交易日（周末或节假日）</li>
+                <li>QDII或ETF联接基金净值更新延迟</li>
+                <li>系统数据未刷新</li>
+            </ul>
+            <p>建议：关注“收益率”和“今日收益”两个指标，结合市场日历判断数据有效性。</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="analysis">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-chart"></i></span>行情深度解剖</div>
+        <div class="card-body">
+            <p><strong>持仓结构分析：</strong></p>
+            <ul>
+                <li><span class="highlight">科技主题</span>（云计算、机器人、半导体、人工智能、消费电子、通信设备等）：共7只，占比约57%，总收益贡献最大，其中通信设备ETF联接A以+17.93%领跑。</li>
+                <li><span class="highlight">黄金类</span>：华安黄金ETF联接A（-3.03%）和国泰黄金ETF联接A（+13.88%），分化明显，建议关注金价走势。</li>
+                <li><span class="safe">宽基指数</span>：沪深300ETF联接表现平稳（+1.29%），适合底仓配置。</li>
+                <li><span class="risk">创新药与港股红利</span>：港股通央企红利ETF联接C零收益，恒生创新药ETF联接C亏损1.62%，需注意港股波动风险。</li>
+            </ul>
+            <p><strong>风险提示：</strong>科技板块集中度高，若行业回调可能影响整体收益；黄金类基金波动较大，建议控制仓位。</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="strategy">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-settings"></i></span>策略指挥所</div>
+        <div class="card-body">
+            <p><strong>当前策略建议：</strong></p>
+            <ul>
+                <li><span class="safe">保持定投纪律</span>：对科技类基金（云计算、机器人、半导体）继续坚持定投，利用波动积累份额。</li>
+                <li><span class="highlight">关注通信设备ETF联接A</span>：收益率高达+17.93%，可考虑部分止盈，落袋为安。</li>
+                <li><span class="risk">黄金类基金谨慎操作</span>：华安黄金ETF联接A亏损，国泰黄金ETF联接A盈利，建议合并或减仓，降低单一品种风险。</li>
+                <li><span class="safe">新增港股红利仓位</span>：华夏港股通央企红利ETF联接C零收益，可作为防御性配置，观察分红情况。</li>
+            </ul>
+            <div class="note">特别提醒：今日无当日收益数据，策略执行前请确认市场状态。</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="market">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-newspaper"></i></span>市场简报</div>
+        <div class="card-body">
+            <p><strong>今日市场概览（基于历史数据）：</strong></p>
+            <ul>
+                <li>云计算板块：近期趋势不明，但华夏云计算ETF联接C盈利+5.39%，显示中期向好。</li>
+                <li>机器人主题：天弘机器人ETF联接C收益率+3.53%，行业政策利好持续。</li>
+                <li>半导体设备：易方达半导体设备ETF联接A收益率+6.25%，国产替代逻辑支撑。</li>
+                <li>黄金：国际金价高位震荡，黄金ETF表现分化，建议关注美联储动向。</li>
+            </ul>
+            <p><strong>宏观环境：</strong>无最新宏观数据更新，建议关注下周经济数据发布。</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="qa">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-chat-bubble"></i></span>你问我答</div>
+        <div class="card-body">
+            <p><strong>昨日提问回顾：</strong></p>
+            <ul>
+                <li>用户多次询问“云计算板块动向”，但今日数据未显示当日涨跌。建议：云计算板块近期受益于AI算力需求，可关注行业ETF（如华夏云计算ETF联接C）的周度表现。</li>
+                <li>用户测试消息较多，表明可能对系统交互不熟悉。回复：请直接输入具体问题，例如“某基金今日净值”或“建议调整持仓”。</li>
+            </ul>
+            <p><strong>今日答疑：</strong>如何解读“今日收益”为0？可能原因：非交易日、净值延迟、或系统维护。建议查看基金公告或推迟至工作日再查看。</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="serial">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-library"></i></span>连载专题：基金投资入门（第2期）</div>
+        <div class="card-body">
+            <p><strong>本期主题：如何看懂基金持仓报告？</strong></p>
+            <p>以您的持仓为例：</p>
+            <ul>
+                <li><strong>持仓份额</strong>：您持有的基金份数，如长城短债A持有1859.16份。</li>
+                <li><strong>最新净值</strong>：每份基金当前价值，如长城短债A净值为1.2423元。</li>
+                <li><strong>持仓市值</strong> = 份额 × 净值，即您的当前资产价值。</li>
+                <li><strong>持仓总成本</strong>：您投入的总金额。</li>
+                <li><strong>持仓收益</strong> = 市值 - 成本，正数表示盈利。</li>
+                <li><strong>收益率</strong> = 收益 / 成本，如通信设备ETF联接A收益率为+17.93%。</li>
+            </ul>
+            <p><strong>小贴士：</strong>收益率超过10%可考虑分批止盈，低于-10%需评估是否补仓或止损。</p>
+            <div class="note">下期预告：如何根据收益率调整投资组合？</div>
+        </div>
+    </div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.0/dist/js/coreui.bundle.min.js"></script>
+</body>
+</html>
