@@ -4,102 +4,214 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>基金投资日报 2026-04-29</title>
-    <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.0/dist/css/coreui.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@coreui/icons@3.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* ========== 完全自包含的深色主题样式 ========== */
         :root {
-            --cui-body-bg: #0d1117;
-            --cui-body-color: #c9d1d9;
-            --cui-dark: #0d1117;
-            --cui-sidebar-bg: #010409;
-            --cui-sidebar-border: #21262d;
-            --cui-card-bg: #161b22;
-            --cui-card-border: #30363d;
-            --cui-heading-color: #e6edf3;
+            --bg-body: #0d1117;
+            --bg-card: #161b22;
+            --bg-sidebar: #010409;
+            --border: #30363d;
+            --text: #c9d1d9;
             --text-dim: #8b949e;
+            --heading: #e6edf3;
             --accent: #58a6ff;
             --risk: #f85149;
             --safe: #3fb950;
             --highlight: #d2a84e;
         }
-        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--cui-body-bg); color: var(--cui-body-color); }
-        .sidebar { background: var(--cui-sidebar-bg) !important; border-right: 1px solid var(--cui-sidebar-border) !important; }
-        .sidebar .nav-title { color: var(--text-dim); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.75rem 1rem; }
-        .sidebar .nav-link { color: var(--text-dim); padding: 0.6rem 1rem; border-radius: 6px; margin: 2px 0.5rem; transition: all 0.15s ease; }
-        .sidebar .nav-link:hover { background: var(--cui-card-bg); color: #e6edf3; }
-        .sidebar .nav-link.active { background: rgba(88,166,255,0.12); color: var(--accent); font-weight: 500; }
-        .sidebar .nav-link .icon { margin-right: 0.75rem; font-size: 1.1rem; opacity: 0.8; }
-        .header { background: var(--cui-sidebar-bg) !important; border-bottom: 1px solid var(--cui-sidebar-border) !important; }
-        .card { background: var(--cui-card-bg); border: 1px solid var(--cui-card-border); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); margin-bottom: 1.5rem; }
-        .card-header { background: transparent; border-bottom: 1px solid var(--cui-card-border); color: var(--cui-heading-color); font-weight: 600; font-size: 1.1rem; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
-        .card-header .icon { color: var(--accent); font-size: 1.2rem; }
-        .card-body { padding: 1.25rem; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-body);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* ========== 侧边栏 ========== */
+        .sidebar {
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            width: 250px;
+            min-width: 250px;
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar.collapsed { transform: translateX(-250px); }
+        
+        .sidebar-brand {
+            color: var(--heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .sidebar .nav-title {
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px 5px;
+        }
+        
+        .sidebar .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 2px 10px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.15s;
+        }
+        
+        .sidebar .nav-link:hover { background: var(--bg-card); color: var(--heading); }
+        .sidebar .nav-link.active { background: rgba(88,166,255,0.12); color: var(--accent); font-weight: 600; }
+        .sidebar .nav-link .icon-emoji { font-size: 1.1rem; width: 24px; text-align: center; }
+        
+        /* ========== 主内容区 ========== */
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+            width: calc(100% - 250px);
+        }
+        
+        .main-content.expanded { margin-left: 0; width: 100%; }
+        
+        /* ========== 顶部导航 ========== */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.15s;
+        }
+        
+        .toggle-btn:hover { background: var(--border); }
+        
+        .page-title { color: var(--heading); font-size: 1.5rem; font-weight: 700; }
+        .page-date { color: var(--text-dim); font-size: 0.9rem; }
+        
+        /* ========== 卡片 ========== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            color: var(--heading);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .card-header .icon-emoji { font-size: 1.3rem; }
+        
+        .card-body { padding: 20px; }
+        .card-body p { margin-bottom: 12px; }
+        .card-body ul, .card-body ol { margin-bottom: 12px; padding-left: 20px; }
+        .card-body li { margin-bottom: 6px; }
+        
+        /* ========== 高亮标注 ========== */
         .highlight { color: var(--highlight); font-weight: 600; }
         .risk { color: var(--risk); font-weight: 600; }
         .safe { color: var(--safe); font-weight: 600; }
-        .note { background: rgba(88,166,255,0.06); border-left: 3px solid var(--accent); padding: 1rem 1.25rem; border-radius: 6px; margin: 1rem 0; }
-        .table { color: var(--cui-body-color); }
-        .table th, .table td { border-color: var(--cui-card-border); }
-        .table thead th { color: var(--text-dim); font-weight: 500; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
-        hr { border-color: var(--cui-card-border); opacity: 0.5; }
+        
+        .note {
+            background: rgba(88,166,255,0.06);
+            border-left: 3px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        /* ========== 表格 ========== */
+        .table { width: 100%; border-collapse: collapse; color: var(--text); }
+        .table th, .table td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+        .table thead th { background: var(--bg-sidebar); color: var(--text-dim); font-weight: 500; font-size: 0.85rem; text-transform: uppercase; }
+        
+        hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+        
+        /* ========== 响应式 ========== */
         @media (max-width: 768px) {
-            .sidebar { width: 100%; height: auto; position: relative; }
-            .wrapper { flex-direction: column; }
-            .body { margin-left: 0 !important; }
+            .sidebar { width: 100%; height: auto; position: relative; min-width: 100%; }
+            .sidebar.collapsed { transform: none; }
+            .main-content { margin-left: 0; width: 100%; }
+            .main-content.expanded { margin-left: 0; }
+            body { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <header class="header header-sticky mb-4">
-        <div class="container-fluid">
-            <button class="header-toggler px-md-0 me-md-3" type="button" data-coreui-toggle="sidebar">
-                <span class="header-toggler-icon"></span>
-            </button>
-            <a class="header-brand d-md-none" href="#"><span class="icon"><i class="cil-chart-line"></i></span> 基金日报</a>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb my-1">
-                    <li class="breadcrumb-item active" aria-current="page">📅 2026-04-29</li>
-                </ol>
-            </nav>
+    <!-- 侧边栏 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">📊 基金日报</div>
+        <div class="nav-title">日报板块</div>
+        <a class="nav-link active" href="#dashboard"><span class="icon-emoji">📋</span> 纪律仪表盘</a>
+        <a class="nav-link" href="#classroom"><span class="icon-emoji">🔬</span> 今日课堂</a>
+        <a class="nav-link" href="#analysis"><span class="icon-emoji">🌊</span> 行情解剖</a>
+        <a class="nav-link" href="#strategy"><span class="icon-emoji">⚙️</span> 策略指挥所</a>
+        <a class="nav-link" href="#market"><span class="icon-emoji">📰</span> 市场简报</a>
+        <a class="nav-link" href="#qa"><span class="icon-emoji">💬</span> 你问我答</a>
+        <a class="nav-link" href="#serial"><span class="icon-emoji">📚</span> 连载专题</a>
+    </aside>
+
+    <!-- 主内容区 -->
+    <div class="main-content" id="mainContent">
+        <!-- 顶部栏 -->
+        <div class="top-bar">
+            <button class="toggle-btn" id="toggleBtn" title="折叠/展开侧边栏">☰</button>
+            <div>
+                <div class="page-title">📅 基金投资日报</div>
+                <div class="page-date">2026-04-29</div>
+            </div>
         </div>
-    </header>
 
-    <div class="wrapper d-flex">
-        <!-- 左侧导航：默认折叠（只显示图标） -->
-        <aside class="sidebar sidebar-dark sidebar-fixed sidebar-narrow" id="sidebar">
-            <div class="sidebar-brand d-none d-md-flex justify-content-center py-3">
-                <span class="icon"><i class="cil-chart-line"></i></span>
-                <span class="sidebar-brand-full">基金日报</span>
-                <span class="sidebar-brand-narrow">📊</span>
-            </div>
-            <ul class="sidebar-nav" data-coreui="navigation" data-simplebar>
-                <li class="nav-title">日报板块</li>
-                <li class="nav-item"><a class="nav-link active" href="#dashboard"><span class="icon"><i class="cil-clipboard"></i></span> 纪律仪表盘</a></li>
-                <li class="nav-item"><a class="nav-link" href="#classroom"><span class="icon"><i class="cil-book"></i></span> 今日课堂</a></li>
-                <li class="nav-item"><a class="nav-link" href="#analysis"><span class="icon"><i class="cil-chart"></i></span> 行情解剖</a></li>
-                <li class="nav-item"><a class="nav-link" href="#strategy"><span class="icon"><i class="cil-settings"></i></span> 策略指挥所</a></li>
-                <li class="nav-item"><a class="nav-link" href="#market"><span class="icon"><i class="cil-newspaper"></i></span> 市场简报</a></li>
-                <li class="nav-item"><a class="nav-link" href="#qa"><span class="icon"><i class="cil-chat-bubble"></i></span> 你问我答</a></li>
-                <li class="nav-item"><a class="nav-link" href="#serial"><span class="icon"><i class="cil-library"></i></span> 连载专题</a></li>
-            </ul>
-            <div class="sidebar-footer d-none d-md-flex">
-                <div class="text-muted small px-3 py-2">专属投资私教 · 每日自动更新</div>
-            </div>
-        </aside>
-
-        <div class="body flex-grow-1 px-3">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12" id="dashboard">
+        <!-- AI 生成的卡片内容 -->
+        <div class="col-12" id="dashboard">
     <div class="card">
         <div class="card-header"><span class="icon"><i class="cil-clipboard"></i></span>纪律仪表盘</div>
         <div class="card-body">
-            <p>总收益率：<span class="highlight">+3.91%</span></p>
-            <p>持仓基金数：13只</p>
-            <p>正收益基金：10只（占比76.9%）</p>
-            <p>亏损基金：2只（黄金A、创新药C）</p>
-            <p>今日涨跌：数据未更新，请关注实时行情</p>
-            <div class="note">⚠️ 今日收益数据暂无，可能因非交易日或数据延迟。请以基金公司最新净值为准。</div>
+            <p>📊 总收益率：<span class="highlight">+3.91%</span></p>
+            <p>💰 持仓总市值：约 <span class="highlight">14,648.65元</span>（基于各基金市值汇总）</p>
+            <p>📈 今日整体表现：无今日涨跌幅数据，暂按昨日净值计算，整体组合小幅盈利。</p>
+            <p>⚠️ 风险提示：黄金类基金（华安黄金ETF联接A）处于<span class="risk">亏损状态（-3.03%）</span>，需关注金价波动。</p>
         </div>
     </div>
 </div>
@@ -108,14 +220,10 @@
     <div class="card">
         <div class="card-header"><span class="icon"><i class="cil-book"></i></span>今日核心课堂</div>
         <div class="card-body">
-            <p><strong>主题：</strong>如何解读你的基金收益率？</p>
-            <p>你的总收益率<span class="highlight">+3.91%</span>，整体表现稳健。但需注意：</p>
-            <ul>
-                <li><strong>收益率最高：</strong>国泰中证全指通信设备ETF联接A（+17.93%），科技主题基金贡献主要收益。</li>
-                <li><strong>亏损基金：</strong>华安黄金ETF联接A（-3.03%）和易方达恒生港股通创新药ETF联接C（-1.62%），黄金受国际金价波动影响，创新药受政策及市场情绪拖累。</li>
-                <li><strong>新基金：</strong>华夏港股通央企红利ETF联接C（收益率0%），刚建仓，需关注后续表现。</li>
-            </ul>
-            <p><strong>小贴士：</strong>分散投资是好事，但需定期检视各基金相关性，避免过度集中在同一板块（如科技类基金较多）。</p>
+            <p><strong>主题：认识你的持仓——行业与主题基金</strong></p>
+            <p>你的组合中共有12只基金，涵盖科技（云计算、机器人、人工智能、通信设备）、消费电子、半导体、黄金、红利、创新药、短债及沪深300。其中<span class="highlight">科技类基金占比最高</span>，如华夏云计算（收益率+5.39%）、国泰通信设备（+17.93%）表现突出。</p>
+            <p>💡 黄金基金（华安黄金ETF联接A）目前<span class="risk">浮亏3.03%</span>，但黄金作为避险资产，长期配置价值仍在。建议：<span class="safe">不要因短期波动恐慌赎回</span>，可等待金价回升。</p>
+            <div class="note">📚 今日重点：理解“持仓收益率”是衡量你买入后至今的盈亏比例，而“今日涨跌幅”反映单日波动。你的数据中今日涨跌幅为None，可能因非交易日或净值未更新。</div>
         </div>
     </div>
 </div>
@@ -124,14 +232,18 @@
     <div class="card">
         <div class="card-header"><span class="icon"><i class="cil-chart"></i></span>行情深度解剖</div>
         <div class="card-body">
-            <p><strong>持仓结构分析：</strong></p>
+            <p><strong>盈利先锋：</strong></p>
             <ul>
-                <li><strong>科技类（AI、半导体、通信、机器人、消费电子）：</strong> 8只基金，占比约61.5%，为绝对主力。其中通信设备ETF联接A收益率最高（+17.93%），消费电子ETF联接C次之（+10.80%），人工智能ETF联接A（+6.31%），半导体设备ETF联接A（+6.25%）。</li>
-                <li><strong>黄金类：</strong> 2只基金（华安黄金A、国泰黄金A），占比约15.3%。国泰黄金A盈利（+13.88%），华安黄金A亏损（-3.03%），出现分化，需关注具体持仓差异。</li>
-                <li><strong>宽基及主题：</strong> 沪深300ETF联接A（+1.29%）、电网设备A（+2.83%）、云计算大数据C（+5.39%）、港股通央企红利C（0%）、创新药C（-1.62%）。</li>
-                <li><strong>短债类：</strong> 长城短债A（+0.42%），作为防御性配置，表现稳定。</li>
+                <li>🥇 国泰中证全指通信设备ETF联接A：<span class="highlight">+17.93%</span>（收益147.06元）</li>
+                <li>🥈 华夏消费电子ETF联接C：<span class="highlight">+10.80%</span>（收益97.24元）</li>
+                <li>🥉 国泰黄金ETF联接A：<span class="highlight">+13.88%</span>（收益14.20元）</li>
             </ul>
-            <p><strong>风险提示：</strong>科技类基金高度集中，若板块回调，组合波动将较大。建议适当平衡，增加债基或红利类基金比例。</p>
+            <p><strong>亏损观察：</strong></p>
+            <ul>
+                <li>🔻 华安黄金ETF联接A：<span class="risk">-3.03%</span>（亏损47.41元）</li>
+                <li>🔻 易方达恒生港股通创新药ETF联接C：<span class="risk">-1.62%</span>（亏损1.62元）</li>
+            </ul>
+            <p><strong>行业分布：</strong>科技（云计算、机器人、AI、通信、半导体、消费电子）占主导，黄金和红利为防御配置，短债为流动性管理。整体组合偏向<span class="highlight">成长型</span>，波动较大但收益潜力较高。</p>
         </div>
     </div>
 </div>
@@ -140,13 +252,13 @@
     <div class="card">
         <div class="card-header"><span class="icon"><i class="cil-settings"></i></span>策略指挥所</div>
         <div class="card-body">
-            <p><strong>当前建议：</strong></p>
+            <p><strong>当前策略建议：</strong></p>
             <ul>
-                <li><span class="safe">✅ 维持现状：</span>长城短债A作为压舱石，建议继续持有；科技类基金可保留，但需设置止盈点（如收益率超20%部分可分批止盈）。</li>
-                <li><span class="risk">⚠️ 关注风险：</span>华安黄金A亏损，建议观察黄金价格走势，若持续下跌可考虑止损转投国泰黄金A（后者收益更好）。创新药C刚买入不久，可再观察1-2个月。</li>
-                <li><span class="highlight">💡 优化建议：</span>考虑增加一只红利或价值型基金（如中证红利ETF联接），降低组合波动。当前科技类占比过高，可适当减仓一只表现较弱的科技基金（如云计算大数据C或人工智能A），转投稳健品种。</li>
+                <li>✅ <span class="safe">持有为主，避免频繁交易</span>：多数基金盈利，尤其通信设备、消费电子涨幅较大，可考虑部分止盈（如减仓10%-20%）锁定利润。</li>
+                <li>⚠️ <span class="risk">黄金亏损不必恐慌</span>：华安黄金ETF联接A浮亏3.03%，若黄金价格中期看涨，可继续持有或小额补仓降低成本。</li>
+                <li>📊 创新药微亏：易方达创新药ETF联接C亏损1.62%，仓位极低（约98元），建议观望，若板块回暖可加仓。</li>
             </ul>
-            <div class="note">📌 纪律提醒：每周或每月定投一次，避免追涨杀跌。根据市场变化，每季度做一次再平衡。</div>
+            <div class="note">💡 纪律提醒：总收益率+3.91%跑赢多数货币基金，但需关注科技板块的波动风险。建议设定止盈线（如+15%）和止损线（如-10%），严格执行。</div>
         </div>
     </div>
 </div>
@@ -155,14 +267,13 @@
     <div class="card">
         <div class="card-header"><span class="icon"><i class="cil-newspaper"></i></span>市场简报</div>
         <div class="card-body">
-            <p><strong>今日市场概况（基于近期数据）：</strong></p>
+            <p><strong>📅 近期市场动态（基于持仓数据推断）：</strong></p>
             <ul>
-                <li>科技板块：云计算、人工智能、半导体等板块近期活跃，受AI应用落地及政策支持推动。你持有的华夏云计算与大数据ETF联接C（+5.39%）和易方达半导体设备ETF联接A（+6.25%）表现突出。</li>
-                <li>黄金：国际金价近期震荡，国内黄金ETF表现分化，需关注美联储政策动向。</li>
-                <li>港股：港股通央企红利和创新药基金表现平淡，受港股整体流动性影响。</li>
-                <li>债市：短债基金保持稳定，适合低风险配置。</li>
+                <li>🌐 <span class="highlight">科技板块活跃</span>：云计算、人工智能、通信设备等主题基金收益率高，反映市场对科技创新的追捧。</li>
+                <li>🥇 <span class="safe">黄金承压</span>：华安黄金ETF联接A亏损，可能受美元走强或风险偏好提升影响。</li>
+                <li>📉 港股创新药：易方达恒生港股通创新药ETF联接C微亏，板块处于调整期。</li>
             </ul>
-            <p><strong>展望：</strong>科技板块仍有结构性机会，但需警惕短期过热。黄金可作为避险配置，但不宜重仓。</p>
+            <p>🔍 建议关注：近期AI、机器人领域政策利好，云计算和大数据ETF（如华夏云计算）有持续上涨潜力；黄金可等待美联储政策信号。</p>
         </div>
     </div>
 </div>
@@ -171,34 +282,70 @@
     <div class="card">
         <div class="card-header"><span class="icon"><i class="cil-chat-bubble"></i></span>你问我答</div>
         <div class="card-body">
-            <p><strong>昨日提问回顾：</strong>你多次询问云计算板块动向（15:08、14:58、14:53、14:48）。</p>
-            <p><strong>解答：</strong>云计算板块近期受AI算力需求增长和数字化转型政策推动，整体表现积极。你持有的华夏云计算与大数据ETF联接C收益率<span class="highlight">+5.39%</span>，符合板块趋势。建议关注行业龙头财报及国家新基建政策，若板块回调可适当加仓。</p>
-            <p><strong>其他提问：</strong>你多次发送“测试”和“你好”，可能是在测试系统或开启对话。如有具体问题，请随时提出！</p>
-            <div class="note">💬 欢迎随时提问，例如：如何调整组合？某只基金是否该卖出？市场热点分析等。</div>
+            <p><strong>昨日提问回顾：</strong>你多次询问“云计算板块动向”，但因数据无今日涨跌幅，无法直接回答。根据收益率数据，<span class="highlight">华夏云计算与大数据ETF联接C收益率+5.39%</span>，表现良好，说明板块近期走强。</p>
+            <p><strong>今日问题解答：</strong></p>
+            <ul>
+                <li>❓ 问：为什么今日涨跌幅显示None？<br>答：可能是非交易日（如周末）或净值尚未更新，今日数据基于昨日净值计算。</li>
+                <li>❓ 问：黄金基金亏损怎么办？<br>答：仓位较小（约1516元），建议继续持有，黄金长期有保值功能，避免追涨杀跌。</li>
+            </ul>
+            <div class="note">📝 如有更多问题，欢迎随时提问！</div>
         </div>
     </div>
 </div>
 
 <div class="col-12" id="serial">
     <div class="card">
-        <div class="card-header"><span class="icon"><i class="cil-library"></i></span>连载专题</div>
+        <div class="card-header"><span class="icon"><i class="cil-library"></i></span>连载专题：基金组合诊断入门</div>
         <div class="card-body">
-            <p><strong>本周专题：</strong>基金组合的“健康体检”方法</p>
-            <p><strong>第一期：</strong>如何评估你的基金组合是否均衡？</p>
+            <p><strong>本周专题：如何评估你的基金组合？</strong></p>
+            <p>你的组合涵盖12只基金，涉及8个行业/主题。诊断要点：</p>
             <ul>
-                <li><strong>检查集中度：</strong>你的组合中科技类基金占比过高（超60%），存在行业集中风险。建议科技类占比控制在40%-50%以内。</li>
-                <li><strong>检查相关性：</strong>科技类基金之间相关性较高，同涨同跌。可加入与科技低相关的资产（如债券、红利、商品）。</li>
-                <li><strong>检查收益来源：</strong>你的收益主要来自通信设备、消费电子、半导体等科技子板块，黄金和宽基贡献有限。需警惕单一板块回调拖累整体。</li>
+                <li>📊 <span class="highlight">分散度</span>：科技类占比过高（约70%），建议适当增加债券或红利类基金（如华夏港股通央企红利ETF联接C仓位极低）以平衡风险。</li>
+                <li>📈 <span class="safe">收益率分析</span>：通信设备（+17.93%）和消费电子（+10.80%）表现优异，可考虑逐步止盈。</li>
+                <li>⚠️ <span class="risk">风险控制</span>：组合中创新药和黄金表现不佳，但仓位小，整体风险可控。</li>
             </ul>
-            <p><strong>行动指南：</strong>下期将教你如何根据风险偏好调整比例。本周可先列出各基金的行业分类，识别重复配置。</p>
+            <p>下周预告：如何根据市场变化调整持仓比例。</p>
         </div>
     </div>
 </div>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.0.0/dist/js/coreui.bundle.min.js"></script>
+    <!-- 纯 JavaScript 侧边栏切换（不依赖任何外部库） -->
+    <script>
+        (function() {
+            var sidebar = document.getElementById('sidebar');
+            var mainContent = document.getElementById('mainContent');
+            var toggleBtn = document.getElementById('toggleBtn');
+            
+            // 默认展开侧边栏
+            var isCollapsed = false;
+            
+            toggleBtn.addEventListener('click', function() {
+                if (isCollapsed) {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                    toggleBtn.textContent = '☰';
+                    isCollapsed = false;
+                } else {
+                    sidebar.classList.add('collapsed');
+                    mainContent.classList.add('expanded');
+                    toggleBtn.textContent = '☰';
+                    isCollapsed = true;
+                }
+            });
+            
+            // 点击导航链接自动滚动到对应板块
+            document.querySelectorAll('.sidebar .nav-link').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('href').substring(1);
+                    var target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
