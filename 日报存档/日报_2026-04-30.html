@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基金投资日报 2026-04-30</title>
+    <style>
+        /* ========== 完全自包含的深色主题样式 ========== */
+        :root {
+            --bg-body: #0d1117;
+            --bg-card: #161b22;
+            --bg-sidebar: #010409;
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-dim: #8b949e;
+            --heading: #e6edf3;
+            --accent: #58a6ff;
+            --risk: #f85149;
+            --safe: #3fb950;
+            --highlight: #d2a84e;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-body);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* ========== 侧边栏 ========== */
+        .sidebar {
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            width: 250px;
+            min-width: 250px;
+            padding: 20px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar.collapsed { transform: translateX(-250px); }
+        
+        .sidebar-brand {
+            color: var(--heading);
+            font-size: 1.3rem;
+            font-weight: 700;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .sidebar .nav-title {
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px 5px;
+        }
+        
+        .sidebar .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 2px 10px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.15s;
+        }
+        
+        .sidebar .nav-link:hover { background: var(--bg-card); color: var(--heading); }
+        .sidebar .nav-link.active { background: rgba(88,166,255,0.12); color: var(--accent); font-weight: 600; }
+        .sidebar .nav-link .icon-emoji { font-size: 1.1rem; width: 24px; text-align: center; }
+        
+        /* ========== 主内容区 ========== */
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+            width: calc(100% - 250px);
+        }
+        
+        .main-content.expanded { margin-left: 0; width: 100%; }
+        
+        /* ========== 顶部导航 ========== */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.15s;
+        }
+        
+        .toggle-btn:hover { background: var(--border); }
+        
+        .page-title { color: var(--heading); font-size: 1.5rem; font-weight: 700; }
+        .page-date { color: var(--text-dim); font-size: 0.9rem; }
+        
+        /* ========== 卡片 ========== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            color: var(--heading);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .card-header .icon-emoji { font-size: 1.3rem; }
+        
+        .card-body { padding: 20px; }
+        .card-body p { margin-bottom: 12px; }
+        .card-body ul, .card-body ol { margin-bottom: 12px; padding-left: 20px; }
+        .card-body li { margin-bottom: 6px; }
+        
+        /* ========== 高亮标注 ========== */
+        .highlight { color: var(--highlight); font-weight: 600; }
+        .risk { color: var(--risk); font-weight: 600; }
+        .safe { color: var(--safe); font-weight: 600; }
+        
+        .note {
+            background: rgba(88,166,255,0.06);
+            border-left: 3px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        /* ========== 表格 ========== */
+        .table { width: 100%; border-collapse: collapse; color: var(--text); }
+        .table th, .table td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+        .table thead th { background: var(--bg-sidebar); color: var(--text-dim); font-weight: 500; font-size: 0.85rem; text-transform: uppercase; }
+        
+        hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+        
+        /* ========== 响应式 ========== */
+        @media (max-width: 768px) {
+            .sidebar { width: 100%; height: auto; position: relative; min-width: 100%; }
+            .sidebar.collapsed { transform: none; }
+            .main-content { margin-left: 0; width: 100%; }
+            .main-content.expanded { margin-left: 0; }
+            body { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏 -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">📊 基金日报</div>
+        <div class="nav-title">日报板块</div>
+        <a class="nav-link active" href="#dashboard"><span class="icon-emoji">📋</span> 纪律仪表盘</a>
+        <a class="nav-link" href="#classroom"><span class="icon-emoji">🔬</span> 今日课堂</a>
+        <a class="nav-link" href="#analysis"><span class="icon-emoji">🌊</span> 行情解剖</a>
+        <a class="nav-link" href="#strategy"><span class="icon-emoji">⚙️</span> 策略指挥所</a>
+        <a class="nav-link" href="#market"><span class="icon-emoji">📰</span> 市场简报</a>
+        <a class="nav-link" href="#qa"><span class="icon-emoji">💬</span> 你问我答</a>
+        <a class="nav-link" href="#serial"><span class="icon-emoji">📚</span> 连载专题</a>
+    </aside>
+
+    <!-- 主内容区 -->
+    <div class="main-content" id="mainContent">
+        <!-- 顶部栏 -->
+        <div class="top-bar">
+            <button class="toggle-btn" id="toggleBtn" title="折叠/展开侧边栏">☰</button>
+            <div>
+                <div class="page-title">📅 基金投资日报</div>
+                <div class="page-date">2026-04-30</div>
+            </div>
+        </div>
+
+        <!-- AI 生成的卡片内容 -->
+        <div class="col-12" id="dashboard">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-clipboard"></i></span>纪律仪表盘</div>
+        <div class="card-body">
+            <p>总收益率：<span class="highlight">+3.91%</span></p>
+            <p>持仓组合：12只基金 | 总市值约 <span class="highlight">14,589.23元</span> | 总成本约 13,946.32元</p>
+            <p>今日收益：<span class="risk">0.00元</span>（数据未更新）</p>
+            <p>盈亏分布：<span class="safe">盈利基金9只</span>，<span class="risk">亏损基金2只</span>，持平1只</p>
+            <div class="note">⚠️ 今日收益显示为0，可能为非交易日或净值尚未更新，请关注后续数据。</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="classroom">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-book"></i></span>今日核心课堂</div>
+        <div class="card-body">
+            <h6>主题：从持仓收益率看仓位调整信号</h6>
+            <p>你的组合中，<span class="highlight">国泰中证全指通信设备ETF联接A（+17.93%）</span>和<span class="highlight">华夏消费电子ETF联接C（+10.80%）</span>收益率较高，建议考虑部分止盈，锁定利润。</p>
+            <p>而<span class="risk">华安黄金ETF联接A（-3.03%）</span>和<span class="risk">易方达恒生港股通创新药ETF联接C（-1.62%）</span>处于亏损状态，需审视是否基本面恶化，或继续定投摊平成本。</p>
+            <div class="note">💡 单个基金收益率超过15%时，可分批赎回30%-50%，避免回撤吞噬收益。</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="analysis">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-chart"></i></span>行情深度解剖</div>
+        <div class="card-body">
+            <h6>收益贡献分析</h6>
+            <p>收益率TOP3：</p>
+            <ul>
+                <li>国泰中证全指通信设备ETF联接A：<span class="highlight">+17.93%</span>（贡献最大）</li>
+                <li>华夏消费电子ETF联接C：<span class="highlight">+10.80%</span></li>
+                <li>国泰黄金ETF联接A：<span class="highlight">+13.88%</span></li>
+            </ul>
+            <p>亏损基金：</p>
+            <ul>
+                <li>华安黄金ETF联接A：<span class="risk">-3.03%</span>（黄金价格波动影响）</li>
+                <li>易方达恒生港股通创新药ETF联接C：<span class="risk">-1.62%</span>（创新药板块承压）</li>
+            </ul>
+            <p>行业分布：科技（AI、机器人、半导体、通信设备）占比最高，黄金两只基金合计占约11%，整体偏向成长风格。</p>
+            <div class="note">📊 科技类基金波动较大，建议设置止盈点（如20%）并严格执行。</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="strategy">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-settings"></i></span>策略指挥所</div>
+        <div class="card-body">
+            <h6>今日操作建议</h6>
+            <ol>
+                <li><span class="safe">止盈操作</span>：对国泰通信设备ETF联接A（收益率+17.93%）赎回30%，华夏消费电子ETF联接C（+10.80%）暂持。</li>
+                <li><span class="risk">止损观察</span>：华安黄金ETF联接A若连续3日下跌，可减仓50%转投其他资产。</li>
+                <li><span class="highlight">定投计划</span>：易方达沪深300ETF联接A（收益率+1.29%）可继续每周定投，作为底仓配置。</li>
+                <li><span class="highlight">新机会</span>：半导体设备ETF联接A（+6.25%）和机器人ETF联接C（+3.53%）趋势向好，可小幅加仓。</li>
+            </ol>
+            <div class="note">🔔 总仓位建议控制在80%以内，保留现金应对市场回调。</div>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="market">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-newspaper"></i></span>市场简报</div>
+        <div class="card-body">
+            <p><span class="highlight">A股</span>：科技板块近期活跃，通信、消费电子、AI主题表现强势，沪深300指数小幅震荡。</p>
+            <p><span class="risk">黄金</span>：国际金价短期回调，华安黄金ETF联接A收益率转负，但长期避险价值仍在。</p>
+            <p><span class="highlight">港股</span>：港股通央企红利ETF持平，创新药ETF微跌，市场情绪谨慎。</p>
+            <p>整体：市场风格偏向成长，但需警惕高位板块回调风险。</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="qa">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-chat-bubble"></i></span>你问我答</div>
+        <div class="card-body">
+            <p><strong>问：今日收益显示为0，是什么原因？</strong></p>
+            <p>答：今日收益为0通常有几种可能：1）当天为非交易日（周末或节假日）；2）基金净值尚未更新（通常需T+1日）；3）数据接口问题。建议明天再查看，或手动核对基金公司官网净值。</p>
+            <p><strong>问：黄金基金亏损，是否应该立即卖出？</strong></p>
+            <p>答：黄金作为避险资产，短期波动正常。华安黄金ETF联接A亏损-3.03%，幅度较小，可先观察而非立即止损。建议设置-8%作为硬止损线，同时关注国际金价走势。</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-12" id="serial">
+    <div class="card">
+        <div class="card-header"><span class="icon"><i class="cil-library"></i></span>连载专题</div>
+        <div class="card-body">
+            <h6>本周专题：基金止盈的艺术</h6>
+            <p>止盈是基金投资中保护收益的关键环节。常见方法：</p>
+            <ul>
+                <li><span class="highlight">目标收益率法</span>：设定15%-20%的目标，达到即分批赎回。</li>
+                <li><span class="highlight">最大回撤法</span>：从最高点回撤5%-10%时止盈。</li>
+                <li><span class="highlight">估值分位法</span>：指数基金PE/PB处于历史高位时止盈。</li>
+            </ul>
+            <p>你的通信设备ETF联接A收益率已达17.93%，适合采用目标收益率法进行部分止盈。</p>
+            <div class="note">📖 下期预告：如何利用定投平滑市场波动？</div>
+        </div>
+    </div>
+</div>
+    </div>
+
+    <!-- 纯 JavaScript 侧边栏切换（不依赖任何外部库） -->
+    <script>
+        (function() {
+            var sidebar = document.getElementById('sidebar');
+            var mainContent = document.getElementById('mainContent');
+            var toggleBtn = document.getElementById('toggleBtn');
+            
+            // 默认展开侧边栏
+            var isCollapsed = false;
+            
+            toggleBtn.addEventListener('click', function() {
+                if (isCollapsed) {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                    toggleBtn.textContent = '☰';
+                    isCollapsed = false;
+                } else {
+                    sidebar.classList.add('collapsed');
+                    mainContent.classList.add('expanded');
+                    toggleBtn.textContent = '☰';
+                    isCollapsed = true;
+                }
+            });
+            
+            // 点击导航链接自动滚动到对应板块
+            document.querySelectorAll('.sidebar .nav-link').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('href').substring(1);
+                    var target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
